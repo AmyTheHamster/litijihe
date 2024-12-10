@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>高三立体几何测试</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+      padding: 20px;
+    }
+    .container {
+      width: 80%;
+      margin: auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #f6a700;
+    }
+    .question {
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+    .choices {
+      display: flex;
+      flex-direction: column;
+    }
+    .choices button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px 0;
+      background-color: #f6a700;  /* Default color */
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    .choices button:hover {
+      background-color: #e59400;
+    }
+    .choices button.selected {
+      background-color: #66cc66;  /* Green when selected */
+    }
+    .submit-btn {
+      background-color: #f6a700;
+      color: white;
+      padding: 10px;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 4px;
+    }
+    .submit-btn:hover {
+      background-color: #e59400;
+    }
+    .score {
+      text-align: center;
+      font-size: 24px;
+      color: green;
+      margin-top: 20px;
+    }
+    .explanation {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #f4f4f4;
+      border-left: 5px solid #f6a700;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>高三立体几何测试</h1>
+    
+    <!-- Questions -->
+    <div id="quiz">
+      <div class="question">
+        <p>1. 立方体的对角线长度是多少？</p>
+        <div class="choices">
+          <button onclick="selectAnswer(1, 'A', this)">A. √2a</button>
+          <button onclick="selectAnswer(1, 'B', this)">B. √3a</button>
+          <button onclick="selectAnswer(1, 'C', this)">C. 2a</button>
+          <button onclick="selectAnswer(1, 'D', this)">D. a</button>
+        </div>
+        <div class="explanation" id="explanation-1"></div>
+      </div>
+
+      <div class="question">
+        <p>2. 球的表面积公式是什么？</p>
+        <div class="choices">
+          <button onclick="selectAnswer(2, 'A', this)">A. 4πr</button>
+          <button onclick="selectAnswer(2, 'B', this)">B. 4πr²</button>
+          <button onclick="selectAnswer(2, 'C', this)">C. 2πr²</button>
+          <button onclick="selectAnswer(2, 'D', this)">D. πr²</button>
+        </div>
+        <div class="explanation" id="explanation-2"></div>
+      </div>
+
+      <div class="question">
+        <p>3. 圆柱体的体积公式是什么？</p>
+        <div class="choices">
+          <button onclick="selectAnswer(3, 'A', this)">A. πr²h</button>
+          <button onclick="selectAnswer(3, 'B', this)">B. πr²h/2</button>
+          <button onclick="selectAnswer(3, 'C', this)">C. 2πrh</button>
+          <button onclick="selectAnswer(3, 'D', this)">D. 4πr²h</button>
+        </div>
+        <div class="explanation" id="explanation-3"></div>
+      </div>
+
+      <div class="question">
+        <p>4. 圆柱体的表面积如何计算？</p>
+        <div class="choices">
+          <button onclick="selectAnswer(4, 'A', this)">A. 2πr² + 2πrh</button>
+          <button onclick="selectAnswer(4, 'B', this)">B. πr² + 2πrh</button>
+          <button onclick="selectAnswer(4, 'C', this)">C. 4πr²</button>
+          <button onclick="selectAnswer(4, 'D', this)">D. πr²h</button>
+        </div>
+        <div class="explanation" id="explanation-4"></div>
+      </div>
+
+      <div class="question">
+        <p>5. 如何求一个圆锥的体积？</p>
+        <div class="choices">
+          <button onclick="selectAnswer(5, 'A', this)">A. 1/3πr²h</button>
+          <button onclick="selectAnswer(5, 'B', this)">B. πr²h</button>
+          <button onclick="selectAnswer(5, 'C', this)">C. 2πr²h</button>
+          <button onclick="selectAnswer(5, 'D', this)">D. 1/2πr²h</button>
+        </div>
+        <div class="explanation" id="explanation-5"></div>
+      </div>
+
+    </div>
+
+    <!-- Submit Button -->
+    <button class="submit-btn" onclick="checkAnswers()">提交答案</button>
+
+    <!-- Score Display -->
+    <div class="score" id="score"></div>
+  </div>
+
+  <script>
+    const correctAnswers = {
+      1: 'B',
+      2: 'B',
+      3: 'A',
+      4: 'A',
+      5: 'A',
+    };
+
+    const explanations = {
+      1: "正确答案是 B. √3a. 立方体的对角线长度公式是 √3a。",
+      2: "正确答案是 B. 4πr². 球的表面积公式是 4πr²。",
+      3: "正确答案是 A. πr²h. 圆柱体的体积公式是 πr²h。",
+      4: "正确答案是 A. 2πr² + 2πrh. 圆柱体的表面积公式是 2πr² + 2πrh。",
+      5: "正确答案是 A. 1/3πr²h. 圆锥体的体积公式是 1/3πr²h。",
+    };
+
+    let selectedAnswers = {};
+
+    function selectAnswer(questionNumber, answer, button) {
+      // Reset the selected state for all buttons in the same question
+      const buttons = button.parentNode.getElementsByTagName('button');
+      for (let btn of buttons) {
+        btn.classList.remove('selected');
+      }
+
+      // Mark the clicked button as selected
+      button.classList.add('selected');
+      selectedAnswers[questionNumber] = answer;
+    }
+
+    function checkAnswers() {
+      let score = 0;
+      for (let i = 1; i <= 5; i++) {  // Adjust the loop for more questions
+        const explanationDiv = document.getElementById('explanation-' + i);
+        if (!selectedAnswers[i]) {
+          alert("请回答所有问题！");
+          return;  // Stop execution if any answer is missing
+        }
+        if (selectedAnswers[i] === correctAnswers[i]) {
+          score += 20;  // Each question worth 20 points
+        } else {
+          explanationDiv.textContent = explanations[i];  // Show explanation for wrong answers
+        }
+      }
+      document.getElementById('score').textContent = `你的得分是: ${score}/100`;
+    }
+  </script>
+
+</body>
+</html>
